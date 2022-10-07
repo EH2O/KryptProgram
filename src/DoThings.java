@@ -1,17 +1,65 @@
 import java.io.*;
+import java.security.CryptoPrimitive;
 
 public class DoThings {
     public static void main(String[] args) {
-    String File1 = "fillBin1";
-    String File2 = "FillText1";
-    String Key = "Hej Hej";
+        String File1 = "fillBin1";
+        String File2 = "FillText1";
+        String Key = "Hej Hej";
+        DoThings myMachine = new DoThings();
+        EnCrypt(myMachine.readText(File2), Key, myMachine.writeBin(File1));
+        String test = myMachine.decrypt(myMachine.wirteText("hej"), Key, myMachine.readBin(File1));
 
-
-    EnDeCrypt(readText(File2), Key, writeBin(File1));
 
     }
 
-     static void EnDeCrypt(BufferedReader in, String Key, DataOutputStream output) {
+    public String decrypt(BufferedWriter out, String key, DataInputStream in) {
+        String Secret = "";
+        int x = 0;
+        int inStr;
+        try {
+            inStr = in.readChar();
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        int CrypLetter;
+        while (1 == 1) {
+            if((char) (inStr) == ')')
+            if (x == key.length()) {
+                    x = 0;
+                }
+            CrypLetter = (inStr^key.charAt(x));
+
+            Secret += (char)(CrypLetter);
+            System.out.println("a");
+            x++;
+            try {
+                inStr = in.readChar();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+        System.out.println(Secret);
+        try {
+            out.write(Secret);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            out.flush();
+            out.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return Secret;
+    }
+
+
+
+     static void EnCrypt(BufferedReader in, String Key, DataOutputStream output) {
         int x = 0;
         String inStr = "a";
         int CrypLetter;
@@ -31,7 +79,7 @@ public class DoThings {
                 CrypLetter =(Key.charAt(x)^inStr.charAt(i));
                 try {
                     output.writeInt(CrypLetter);
-                    System.out.println(CrypLetter);
+
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -47,11 +95,17 @@ public class DoThings {
          }
      }
 
-    private static void wirteText() {
-        
+    public BufferedWriter wirteText(String fill) {
+        BufferedWriter out;
+        try {
+            out = new BufferedWriter(new FileWriter(fill));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return out;
     }
 
-    private static BufferedReader readText(String fill) {
+    public BufferedReader readText(String fill) {
         BufferedReader in;
         try {
             in = new BufferedReader(new FileReader(fill));
@@ -61,7 +115,7 @@ public class DoThings {
         return in;
     }
 
-    private static DataOutputStream writeBin(String fill) {
+    public DataOutputStream writeBin(String fill) {
         DataOutputStream output;
         try {
             output = new DataOutputStream (new BufferedOutputStream(new FileOutputStream(fill)));
@@ -71,7 +125,13 @@ public class DoThings {
         return output;
     }
 
-    private static void readBin() {
-        
+    public DataInputStream readBin(String fill) {
+        DataInputStream input;
+        try {
+            input = new DataInputStream(new BufferedInputStream(new FileInputStream(fill)));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return input;
     }
 }
