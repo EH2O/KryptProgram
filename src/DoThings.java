@@ -18,30 +18,32 @@ public class DoThings {
         int x = 0;
         int inStr;
         try {
-            inStr = in.readChar();
+            inStr = in.readInt();
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        int CrypLetter;
+        int CrypLetter = 0;
         while (1 == 1) {
-            if((char) (inStr) == ')')
+            if((char) (CrypLetter) == ')'){
+                break;
+            }
             if (x == key.length()) {
                     x = 0;
                 }
             CrypLetter = (inStr^key.charAt(x));
 
             Secret += (char)(CrypLetter);
-            System.out.println("a");
+            System.out.println("step 2:" + Secret);
             x++;
             try {
-                inStr = in.readChar();
+
+                inStr = in.readInt();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                break;
             }
 
         }
-        System.out.println(Secret);
         try {
             out.write(Secret);
         } catch (IOException e) {
@@ -77,6 +79,7 @@ public class DoThings {
                     x = 0;
                 }
                 CrypLetter =(Key.charAt(x)^inStr.charAt(i));
+                System.out.println("step 1:" + Key.charAt(x));
                 try {
                     output.writeInt(CrypLetter);
 
