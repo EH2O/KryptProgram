@@ -1,15 +1,23 @@
 import java.io.*;
-import java.security.CryptoPrimitive;
 
-public class DoThings {
-    public static void main(String[] args) {
-        String File1 = "fillBin1";
-        String File2 = "FillText1";
-        String Key = "Hej Hej";
-        DoThings myMachine = new DoThings();
-        EnCrypt(myMachine.readText(File2), Key, myMachine.writeBin(File1));
-        String test = myMachine.decrypt(myMachine.wirteText("hej"), Key, myMachine.readBin(File1));
-
+public class Model {
+    private String file1;
+    private String file2;
+    private String key;
+    private boolean isOn;
+    public void setFileIn(String file1){
+        this.file1 = file1;
+    }
+    public void setFileOut(String file2){
+        this.file2 = file2;
+    }
+    public void setKey(String key) {
+        this.key = key;
+    }
+    public void isOn(boolean isOn){
+        this.isOn = isOn;
+    }
+    public void Crypt(){
 
     }
 
@@ -25,9 +33,7 @@ public class DoThings {
         }
         int CrypLetter = 0;
         while (1 == 1) {
-            if((char) (CrypLetter) == ')'){
-                break;
-            }
+
             if (x == key.length()) {
                     x = 0;
                 }
